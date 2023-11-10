@@ -1,5 +1,7 @@
 package com.example.nushhack23.model;
 
+import javafx.beans.property.SimpleStringProperty;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -12,20 +14,24 @@ public class NUSHFella {
     private String description;
     private ArrayList<String> subjects;
     private ArrayList<Rating> ratings;
+    private SimpleStringProperty idProperty;
+    private SimpleStringProperty nameProperty;
+    private SimpleStringProperty starsProperty;
     public NUSHFella(String id, String name, String password, double hours, double stars, ArrayList<Rating> ratings, ArrayList<String> subjects) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.hours = hours;
         this.stars = stars;
+        this.ratings = ratings;
+        this.subjects = subjects;
+        idProperty = new SimpleStringProperty(id);
+        nameProperty = new SimpleStringProperty(name);
+        starsProperty = new SimpleStringProperty(String.format("%1.2f", stars));
     }
 
     public NUSHFella(NUSHFella otherFella) {
-        this.id = otherFella.getId();
-        this.name = otherFella.getName();
-        this.password = otherFella.getPassword();
-        this.hours = otherFella.getHours();
-        this.stars = otherFella.getStars();
+        this(otherFella.getId(), otherFella.getName(), otherFella.getPassword(), otherFella.getHours(), otherFella.getStars(), otherFella.getRatings(), otherFella.getSubjects());
     }
 
     // Accessors
@@ -60,6 +66,7 @@ public class NUSHFella {
     // Mutators
     public void setId(String id) {
         this.id = id;
+        idProperty.set(id);
     }
 
     public void setPassword(String password) {
@@ -69,6 +76,7 @@ public class NUSHFella {
     }
     public void setName(String name) {
         this.name = name;
+        nameProperty.set(name);
     }
 
     public void setHours(double hours) {
@@ -77,6 +85,7 @@ public class NUSHFella {
 
     public void setStars(double stars) {
         this.stars = stars;
+        starsProperty.set(String.format("%1.2f", stars));
     }
 
     public void setDescription(String description)

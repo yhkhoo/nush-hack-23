@@ -4,13 +4,13 @@ import com.example.nushhack23.model.Database;
 import com.example.nushhack23.model.Statics;
 import com.example.nushhack23.model.Student;
 import com.example.nushhack23.model.Teacher;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 
@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 public class StudentController implements Initializable {
 
     private Database db;
+    private ObservableList<Teacher> tableList = FXCollections.observableArrayList();
     @FXML
     private Button bookBtn;
 
@@ -73,7 +74,16 @@ public class StudentController implements Initializable {
     private Label teacherTimeslots;
 
     @FXML
-    private TableView<?> timeslotTV;
+    private TableView<Teacher> timeslotTV;
+
+    @FXML
+    private TableColumn<Teacher, String> idColumn;
+
+    @FXML
+    private TableColumn<Teacher, String> nameColumn;
+
+    @FXML
+    private TableColumn<Teacher, String> starsColumn;
 
     @FXML
     void onBook(ActionEvent event) {
@@ -112,12 +122,21 @@ public class StudentController implements Initializable {
         subjectTA.setEditable(false);
         subjectTA.setPromptText(db.getStudent(Statics.studentID).getSubjects().toString());
 
+        idColumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("id"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("name"));
+        starsColumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("stars"));
+        timeslotTV.setItems(tableList);
         Student s1 = db.getStudent(Statics.studentID);
         for(Teacher t1 : db.getTeacherDB()){
-            for(String subject : t1.getSubjects()){
-                if(s1.getSubjects().contains(subject)){
-
+            for(String subject : s1.getSubjects()){
+                for(String subject2: t1.getSubjects()){
+                    if(subject.equals(subject2)){
+                        tableList.add(t1);
+                        break;
+                    }
                 }
+                if(tableList.get(tableList.size()-1) == t1)
+                    break;
             }
         }
     }
