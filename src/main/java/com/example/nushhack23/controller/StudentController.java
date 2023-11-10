@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class StudentController implements Initializable {
@@ -43,6 +44,9 @@ public class StudentController implements Initializable {
 
     @FXML
     private Label mySubjects;
+
+    @FXML
+    private Button saveChangesBtn;
 
     @FXML
     private TextArea subjectTA;
@@ -78,7 +82,24 @@ public class StudentController implements Initializable {
 
     @FXML
     void onEdit(ActionEvent event) {
+        subjectTA.setEditable(true);
+        saveChangesBtn.setVisible(true);
+        editBtn.setVisible(false);
+    }
 
+    @FXML
+    void onSaveChanges(ActionEvent event) {
+        String newSubjects = subjectTA.getText();
+        String tokens[] = newSubjects.split(",");
+        ArrayList<String> subjects = new ArrayList<String>();
+        for(String i : tokens){
+            subjects.add(i);
+        }
+        db.getStudent(Statics.studentID).setSubject(subjects);
+        subjectTA.setEditable(false);
+        subjectTA.setPromptText(db.getStudent(Statics.studentID).toString());
+        editBtn.setVisible(true);
+        saveChangesBtn.setVisible(false);
     }
 
     @Override
@@ -87,7 +108,9 @@ public class StudentController implements Initializable {
         db.loadStudentDB("studentsDB.csv");
         db.loadTeacherDB("teacherDB.csv");
 
-
+        saveChangesBtn.setVisible(false);
+        subjectTA.setEditable(false);
+        subjectTA.setPromptText(db.getStudent(Statics.studentID).getSubjects().toString());
 
         Student s1 = db.getStudent(Statics.studentID);
         for(Teacher t1 : db.getTeacherDB()){
