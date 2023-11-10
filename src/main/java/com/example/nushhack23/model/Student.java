@@ -36,7 +36,7 @@ public class Student extends NUSHFella {
 
     public Student(String id, String name, String password)
     {
-        this(id, name, password, 0.0, 0.0, new ArrayList<Rating>(), new ArrayList<String>(), new ArrayList<Timeslot>());
+        this(id, name, password, 0.0, 0.0, new ArrayList<Rating>(), new ArrayList<String>(), new ArrayList<Timeslot>(), new ArrayList<String>());
     }
 
     public void bookTimeslot(Teacher tutor, Timeslot t1)
