@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 
@@ -43,6 +45,9 @@ public class StudentController implements Initializable {
     private Label mySubjects;
 
     @FXML
+    private TextArea subjectTA;
+
+    @FXML
     private Label teacherHours;
 
     @FXML
@@ -64,7 +69,7 @@ public class StudentController implements Initializable {
     private Label teacherTimeslots;
 
     @FXML
-    private FlowPane teacherTimeslotsFP;
+    private TableView<?> timeslotTV;
 
     @FXML
     void onBook(ActionEvent event) {
@@ -81,6 +86,8 @@ public class StudentController implements Initializable {
         db = new Database();
         db.loadStudentDB("studentsDB.csv");
         db.loadTeacherDB("teacherDB.csv");
+
+
 
         Student s1 = db.getStudent(Statics.studentID);
         for(Teacher t1 : db.getTeacherDB()){

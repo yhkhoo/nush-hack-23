@@ -1,10 +1,7 @@
 package com.example.nushhack23.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 
 import javafx.event.ActionEvent;
@@ -55,6 +52,9 @@ public class TeacherController {
 
         @FXML
         private Label studentSubjects;
+
+        @FXML
+        private TextArea subjectTA;
 
         @FXML
         private TextField timeslotEndTF;
