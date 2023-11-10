@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.nushhack23.controller.StudentController">
    <left>
       <VBox prefHeight="362.0" prefWidth="206.0" BorderPane.alignment="CENTER">
          <children>
@@ -164,9 +164,9 @@
    <center>
       <TableView fx:id="timeslotTV" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn prefWidth="140.00000607967377" text="Student ID" />
-          <TableColumn prefWidth="252.80001831054688" text="Name" />
-            <TableColumn prefWidth="101.60003662109375" text="Stars" />
+          <TableColumn fx:id="idColumn" prefWidth="140.00000607967377" text="Student ID" />
+          <TableColumn fx:id="nameColumn" prefWidth="252.80001831054688" text="Name" />
+            <TableColumn fx:id="starsColumn" prefWidth="101.60003662109375" text="Stars" />
         </columns>
       </TableView>
    </center>
