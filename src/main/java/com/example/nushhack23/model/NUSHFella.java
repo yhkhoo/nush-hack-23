@@ -54,7 +54,7 @@ public abstract class NUSHFella {
         for(Rating i : ratings){
             totalRatingsSum += i.getStars();
         }
-        setRating((totalRatingsSum + newRating.stars) / ratings.size());
+        setStars((totalRatingsSum + newRating.stars) / ratings.size());
     }
 
     public void addHours(double newHours){
