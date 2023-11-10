@@ -87,7 +87,7 @@ public class StudentController implements Initializable {
 
     @FXML
     void onBook(ActionEvent event) {
-        
+
     }
 
     @FXML
@@ -101,7 +101,7 @@ public class StudentController implements Initializable {
     void onSaveChanges(ActionEvent event) {
         String newSubjects = subjectTA.getText();
         String tokens[] = newSubjects.split(",");
-        ArrayList<String> subjects = new ArrayList<String>();
+        ArrayList<String> subjects = new ArrayList<>();
         for(String i : tokens){
             subjects.add(i);
         }

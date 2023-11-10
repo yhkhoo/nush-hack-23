@@ -1,84 +1,124 @@
 package com.example.nushhack23.controller;
 
+import com.example.nushhack23.model.Database;
+import com.example.nushhack23.model.Statics;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 
 import javafx.event.ActionEvent;
 
-public class TeacherController {
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-        @FXML
-        private Button addTimeslotBtn;
+public class TeacherController implements Initializable {
 
-        @FXML
-        private Button editBtn;
+    private Database db;
+    @FXML
+    private Button addTimeslotBtn;
 
-        @FXML
-        private ListView<?> listView;
+    @FXML
+    private Button editBtn;
 
-        @FXML
-        private Label myHours;
+    @FXML
+    private ListView<?> listView;
 
-        @FXML
-        private Label myId;
+    @FXML
+    private Label myHours;
 
-        @FXML
-        private Label myName;
+    @FXML
+    private Label myId;
 
-        @FXML
-        private ImageView myPfp;
+    @FXML
+    private Label myName;
 
-        @FXML
-        private Label myStars;
+    @FXML
+    private ImageView myPfp;
 
-        @FXML
-        private Label mySubjects;
+    @FXML
+    private Label myStars;
 
-        @FXML
-        private Label studentHours;
+    @FXML
+    private Label mySubjects;
 
-        @FXML
-        private Label studentID;
+    @FXML
+    private Button saveChangesBtn;
 
-        @FXML
-        private Label studentName;
+    @FXML
+    private Label studentHours;
 
-        @FXML
-        private ImageView studentPfp;
+    @FXML
+    private Label studentID;
 
-        @FXML
-        private Label studentStars;
+    @FXML
+    private Label studentName;
 
-        @FXML
-        private Label studentSubjects;
+    @FXML
+    private ImageView studentPfp;
 
-        @FXML
-        private TextArea subjectTA;
+    @FXML
+    private Label studentStars;
 
-        @FXML
-        private TextField timeslotEndTF;
+    @FXML
+    private Label studentSubjects;
 
-        @FXML
-        private Button timeslotRemoveBtn;
+    @FXML
+    private TextArea subjectTA;
 
-        @FXML
-        private TextField timeslotStartTF;
+    @FXML
+    private TextField timeslotEndTF;
 
-        @FXML
-        void onAddTimeslot(ActionEvent event) {
+    @FXML
+    private Button timeslotRemoveBtn;
 
+    @FXML
+    private TextField timeslotStartTF;
+
+    @FXML
+    void onAddTimeslot(ActionEvent event) {
+        
+    }
+
+    @FXML
+    void onEdit(ActionEvent event) {
+        subjectTA.setEditable(true);
+        saveChangesBtn.setVisible(true);
+        editBtn.setVisible(false);
+    }
+
+    @FXML
+    void onSaveChanges(ActionEvent event) {
+        String newSubjects = subjectTA.getText();
+        String tokens[] = newSubjects.split(",");
+        ArrayList<String> subjects = new ArrayList<String>();
+        for(String i : tokens){
+            subjects.add(i);
         }
+        db.getStudent(Statics.studentID).setSubject(subjects);
+        subjectTA.setEditable(false);
+        subjectTA.setPromptText(db.getStudent(Statics.studentID).toString());
+        editBtn.setVisible(true);
+        saveChangesBtn.setVisible(false);
+    }
 
-        @FXML
-        void onEdit(ActionEvent event) {
+    @FXML
+    void onRemove(ActionEvent event) {
 
-        }
+    }
 
-        @FXML
-        void onRemove(ActionEvent event) {
 
-        }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        db = new Database();
+        db.loadStudentDB("studentsDB.csv");
+        db.loadTeacherDB("teacherDB.csv");
 
+        saveChangesBtn.setVisible(false);
+        editBtn.setVisible(true);
+        subjectTA.setEditable(false);
+        timeslotRemoveBtn.setVisible(false);
+    }
 }
 

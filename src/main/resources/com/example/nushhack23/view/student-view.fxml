@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.nushhack23.controller.StudentController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.nushhack23.controller.StudentController">
    <left>
       <VBox prefHeight="362.0" prefWidth="206.0" BorderPane.alignment="CENTER">
          <children>
@@ -162,12 +162,24 @@
       </VBox>
    </right>
    <center>
-      <TableView fx:id="timeslotTV" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn fx:id="idColumn" prefWidth="140.00000607967377" text="Student ID" />
-          <TableColumn fx:id="nameColumn" prefWidth="252.80001831054688" text="Name" />
-            <TableColumn fx:id="starsColumn" prefWidth="101.60003662109375" text="Stars" />
-        </columns>
-      </TableView>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="562.0" text="Available tutors">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <TableView fx:id="timeslotTV" prefHeight="509.0" prefWidth="494.0">
+               <columns>
+                  <TableColumn fx:id="idColumn" prefWidth="140.00000607967377" text="Student ID" />
+                  <TableColumn fx:id="nameColumn" prefWidth="252.80001831054688" text="Name" />
+                  <TableColumn fx:id="starsColumn" prefWidth="101.60003662109375" text="Stars" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
    </center>
 </BorderPane>
