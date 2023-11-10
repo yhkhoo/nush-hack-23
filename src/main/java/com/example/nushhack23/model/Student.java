@@ -1,0 +1,4 @@
+package com.example.nushhack23.model;
+
+public class Student {
+}
