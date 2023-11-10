@@ -15,6 +15,13 @@ public class Teacher extends NUSHFella {
         this.bookers = bookers;
     }
 
+    public Teacher(NUSHFella nushFella, ArrayList<Timeslot> availableTimeslots, ArrayList<Timeslot> bookedTimeslots, ArrayList<String> bookers) {
+        super(nushFella);
+        this.availableTimeslots = availableTimeslots;
+        this.bookedTimeslots = bookedTimeslots;
+        this.bookers = bookers;
+    }
+
     public Teacher(String student_ID, String name, String password, double hours, double stars){
         this(student_ID, name, password, hours, stars, new ArrayList<Rating>(), new ArrayList<String>(), new ArrayList<Timeslot>(), new ArrayList<Timeslot>(), new ArrayList<String>());
     }
@@ -38,6 +45,10 @@ public class Teacher extends NUSHFella {
 
     public ArrayList<Timeslot> getBookedTimeslots(){
         return this.bookedTimeslots;
+    }
+
+    public ArrayList<String> getBookers() {
+        return bookers;
     }
 
     public void bookTimeslot(Timeslot t1){

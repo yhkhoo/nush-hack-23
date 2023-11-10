@@ -3,7 +3,7 @@ package com.example.nushhack23.model;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public abstract class NUSHFella {
+public class NUSHFella {
     private String id;
     private String name;
     private String password;
@@ -18,6 +18,14 @@ public abstract class NUSHFella {
         this.password = password;
         this.hours = hours;
         this.stars = stars;
+    }
+
+    public NUSHFella(NUSHFella otherFella) {
+        this.id = otherFella.getId();
+        this.name = otherFella.getName();
+        this.password = otherFella.getPassword();
+        this.hours = otherFella.getHours();
+        this.stars = otherFella.getStars();
     }
 
     // Accessors
