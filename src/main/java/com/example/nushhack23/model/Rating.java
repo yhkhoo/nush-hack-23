@@ -28,4 +28,5 @@ public class Rating {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
 }
