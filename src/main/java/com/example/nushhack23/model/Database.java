@@ -11,8 +11,8 @@ public class Database {
     private ArrayList<Student> studentDB;
     private ArrayList<Teacher> teacherDB;
     private String studentFile, teacherFile;
-    Database(String studentFile, String teacherFile)
-    {
+
+    Database(String studentFile, String teacherFile) {
         this.studentDB = new ArrayList<>();
         this.teacherDB = new ArrayList<>();
     }
@@ -20,18 +20,16 @@ public class Database {
     public ArrayList<Student> getStudentDB() {
         return studentDB;
     }
+
     public ArrayList<Teacher> getTeacherDB() {
         return teacherDB;
     }
 
-    public void loadStudentDB(String filename)
-    {
-        try
-        {
+    public void loadStudentDB(String filename) {
+        try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
             String line;
-            while((line = reader.readLine()) != null)
-            {
+            while ((line = reader.readLine()) != null) {
                 String[] tokens = line.split(",");
                 String studentID = tokens[0];
                 String name = tokens[1];
@@ -45,42 +43,34 @@ public class Database {
 
                 line = reader.readLine();
                 tokens = line.split(",");
-                for(int i = 0; i < tokens.length; i += 2)
-                {
-                    ratings.add(new Rating(Double.parseDouble(tokens[i]), tokens[i+1]));
+                for (int i = 0; i < tokens.length; i += 2) {
+                    ratings.add(new Rating(Double.parseDouble(tokens[i]), tokens[i + 1]));
                 }
 
                 line = reader.readLine();
                 tokens = line.split(",");
-                for(int i = 0; i < tokens.length; i++)
-                {
+                for (int i = 0; i < tokens.length; i++) {
                     subjects.add(tokens[i]);
                 }
 
                 line = reader.readLine();
                 tokens = line.split(",");
-                for(int i = 0; i < tokens.length; i += 2)
-                {
-                    timeslotsBooked.add(new Timeslot(LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i]), 0, ZoneOffset.ofHours(8)), LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i+1]), 0, ZoneOffset.ofHours(8))));
+                for (int i = 0; i < tokens.length; i += 2) {
+                    timeslotsBooked.add(new Timeslot(LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i]), 0, ZoneOffset.ofHours(8)), LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i + 1]), 0, ZoneOffset.ofHours(8))));
                 }
 
                 studentDB.add(new Student(studentID, name, password, hours, stars, ratings, subjects, timeslotsBooked));
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("error");
         }
     }
 
-    public void loadTeacherDB(String filename)
-    {
-        try
-        {
+    public void loadTeacherDB(String filename) {
+        try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
             String line;
-            while((line = reader.readLine()) != null)
-            {
+            while ((line = reader.readLine()) != null) {
                 String[] tokens = line.split(",");
 
                 String studentID = tokens[0];
@@ -97,42 +87,35 @@ public class Database {
 
                 line = reader.readLine();
                 tokens = line.split(",");
-                for(int i = 0; i < tokens.length; i += 2)
-                {
-                    ratings.add(new Rating(Double.parseDouble(tokens[i]), tokens[i+1]));
+                for (int i = 0; i < tokens.length; i += 2) {
+                    ratings.add(new Rating(Double.parseDouble(tokens[i]), tokens[i + 1]));
                 }
 
                 line = reader.readLine();
                 tokens = line.split(",");
-                for(int i = 0; i < tokens.length; i++)
-                {
+                for (int i = 0; i < tokens.length; i++) {
                     subjects.add(tokens[i]);
                 }
 
                 line = reader.readLine();
                 tokens = line.split(",");
-                for(int i = 0; i < tokens.length; i += 2)
-                {
-                    availableTimeslots.add(new Timeslot(LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i]), 0, ZoneOffset.ofHours(8)), LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i+1]), 0, ZoneOffset.ofHours(8))));
+                for (int i = 0; i < tokens.length; i += 2) {
+                    availableTimeslots.add(new Timeslot(LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i]), 0, ZoneOffset.ofHours(8)), LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i + 1]), 0, ZoneOffset.ofHours(8))));
                 }
 
                 line = reader.readLine();
                 tokens = line.split(",");
-                for(int i = 0; i < tokens.length; i += 2)
-                {
-                    bookedTimeslots.add(new Timeslot(LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i]), 0, ZoneOffset.ofHours(8)), LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i+1]), 0, ZoneOffset.ofHours(8))));
+                for (int i = 0; i < tokens.length; i += 2) {
+                    bookedTimeslots.add(new Timeslot(LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i]), 0, ZoneOffset.ofHours(8)), LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i + 1]), 0, ZoneOffset.ofHours(8))));
                 }
 
 
                 teacherDB.add(new Teacher(studentID, name, password, hours, stars, ratings, subjects, availableTimeslots, bookedTimeslots));
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("error");
         }
     }
-
 
 
 }
