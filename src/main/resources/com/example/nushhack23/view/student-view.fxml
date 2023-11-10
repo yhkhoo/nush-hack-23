@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -64,13 +65,26 @@
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <Button fx:id="editBtn" mnemonicParsing="false" text="Edit">
+            <TextArea fx:id="subjectTA" prefHeight="19.0" prefWidth="206.0">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </TextArea>
+            <Button fx:id="editBtn" mnemonicParsing="false" onAction="#onEdit" text="Edit">
                <font>
                   <Font size="20.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                </VBox.margin>
+            </Button>
+            <Button fx:id="saveChangesBtn" mnemonicParsing="false" onAction="#onSaveChanges" prefHeight="43.0" prefWidth="212.0" text="Save changes">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
             </Button>
          </children>
       </VBox>
@@ -136,7 +150,7 @@
                </VBox.margin>
             </Label>
             <FlowPane fx:id="teacherTImeslots" prefWidth="200.0" />
-            <Button mnemonicParsing="false" text="Book">
+            <Button mnemonicParsing="false" onAction="#onBook" text="Book">
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -150,8 +164,9 @@
    <center>
       <TableView fx:id="timeslotTV" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn prefWidth="140.00000607967377" text="Student ID" />
+          <TableColumn prefWidth="252.80001831054688" text="Name" />
+            <TableColumn prefWidth="101.60003662109375" text="Stars" />
         </columns>
       </TableView>
    </center>
