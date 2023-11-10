@@ -6,15 +6,17 @@ public class Teacher extends NUSHFella {
 
     private ArrayList<Timeslot> availableTimeslots;
     private ArrayList<Timeslot> bookedTimeslots;
+    private ArrayList<String> bookers;
 
-    public Teacher(String student_ID, String name, String password, double hours, double stars, ArrayList<Rating> ratings, ArrayList<String> subjects, ArrayList<Timeslot> availableTimeslots, ArrayList<Timeslot> bookedTimeslots){
+    public Teacher(String student_ID, String name, String password, double hours, double stars, ArrayList<Rating> ratings, ArrayList<String> subjects, ArrayList<Timeslot> availableTimeslots, ArrayList<Timeslot> bookedTimeslots, ArrayList<String> bookers){
         super(student_ID, name, password, hours, stars, ratings, subjects);
         this.availableTimeslots = availableTimeslots;
         this.bookedTimeslots = bookedTimeslots;
+        this.bookers = bookers;
     }
 
     public Teacher(String student_ID, String name, String password, double hours, double stars){
-        this(student_ID, name, password, hours, stars, new ArrayList<Rating>(), new ArrayList<String>(), new ArrayList<Timeslot>(), new ArrayList<Timeslot>());
+        this(student_ID, name, password, hours, stars, new ArrayList<Rating>(), new ArrayList<String>(), new ArrayList<Timeslot>(), new ArrayList<Timeslot>(), new ArrayList<String>());
     }
 
     public Teacher(String student_ID, String name, String password)
