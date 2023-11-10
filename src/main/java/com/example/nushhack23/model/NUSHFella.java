@@ -41,8 +41,12 @@ public abstract class NUSHFella {
         return description;
     }
 
-    public ArrayList<String> getSubject() {
+    public ArrayList<String> getSubjects() {
         return subjects;
+    }
+
+    public ArrayList<Rating> getRatings() {
+        return ratings;
     }
 
     // Mutators
