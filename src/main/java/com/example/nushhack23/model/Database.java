@@ -13,9 +13,8 @@ import java.util.ArrayList;
 public class Database {
     private ArrayList<Student> studentDB;
     private ArrayList<Teacher> teacherDB;
-    private String studentFile, teacherFile;
 
-    Database(String studentFile, String teacherFile) {
+    public Database() {
         this.studentDB = new ArrayList<>();
         this.teacherDB = new ArrayList<>();
     }

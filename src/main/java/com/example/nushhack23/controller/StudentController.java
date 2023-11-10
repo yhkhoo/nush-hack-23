@@ -1,70 +1,94 @@
 package com.example.nushhack23.controller;
 
+import com.example.nushhack23.model.Database;
+import com.example.nushhack23.model.Statics;
+import com.example.nushhack23.model.Student;
+import com.example.nushhack23.model.Teacher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 
-public class StudentController {
+import java.net.URL;
+import java.util.ResourceBundle;
 
-        @FXML
-        private Button bookBtn;
+public class StudentController implements Initializable {
 
-        @FXML
-        private Button editBtn;
+    private Database db;
+    @FXML
+    private Button bookBtn;
 
-        @FXML
-        private Label myHours;
+    @FXML
+    private Button editBtn;
 
-        @FXML
-        private Label myId;
+    @FXML
+    private Label myHours;
 
-        @FXML
-        private Label myName;
+    @FXML
+    private Label myId;
 
-        @FXML
-        private ImageView myPfp;
+    @FXML
+    private Label myName;
 
-        @FXML
-        private Label myStars;
+    @FXML
+    private ImageView myPfp;
 
-        @FXML
-        private Label mySubjects;
+    @FXML
+    private Label myStars;
 
-        @FXML
-        private Label teacherHours;
+    @FXML
+    private Label mySubjects;
 
-        @FXML
-        private Label teacherID;
+    @FXML
+    private Label teacherHours;
 
-        @FXML
-        private Label teacherName;
+    @FXML
+    private Label teacherID;
 
-        @FXML
-        private ImageView teacherPfp;
+    @FXML
+    private Label teacherName;
 
-        @FXML
-        private Label teacherStars;
+    @FXML
+    private ImageView teacherPfp;
 
-        @FXML
-        private Label teacherSubjects;
+    @FXML
+    private Label teacherStars;
 
-        @FXML
-        private Label teacherTimeslots;
+    @FXML
+    private Label teacherSubjects;
 
-        @FXML
-        private FlowPane teacherTimeslotsFP;
+    @FXML
+    private Label teacherTimeslots;
 
-        @FXML
-        void onBook(ActionEvent event) {
+    @FXML
+    private FlowPane teacherTimeslotsFP;
 
+    @FXML
+    void onBook(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onEdit(ActionEvent event) {
+
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        db = new Database();
+        db.loadStudentDB("studentsDB.csv");
+        db.loadTeacherDB("teacherDB.csv");
+
+        Student s1 = db.getStudent(Statics.studentID);
+        for(Teacher t1 : db.getTeacherDB()){
+            for(String subject : t1.getSubjects()){
+                if(s1.getSubjects().contains(subject)){
+
+                }
+            }
         }
-
-        @FXML
-        void onEdit(ActionEvent event) {
-
-        }
-
+    }
 }
