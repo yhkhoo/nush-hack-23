@@ -33,4 +33,23 @@ public class Student extends NUSHFella {
     public void setBookedTeachers(ArrayList<String> bookedTeachers) {
         this.bookedTeachers = bookedTeachers;
     }
+
+    public Student(String id, String name, String password)
+    {
+        this(id, name, password, 0.0, 0.0, new ArrayList<Rating>(), new ArrayList<String>(), new ArrayList<Timeslot>());
+    }
+
+    public void bookTimeslot(Teacher tutor, Timeslot t1)
+    {
+        tutor.getAvailableTimeslots().remove(t1);
+        tutor.getBookedTimeslots().add(t1);
+    }
+
+    public void leaveRating(Teacher tutor, Rating rating)
+    {
+        tutor.calculateStars(rating);
+        tutor.getRatings().add(rating);
+    }
+
+
 }

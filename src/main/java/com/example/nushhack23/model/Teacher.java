@@ -59,7 +59,11 @@ public class Teacher extends NUSHFella {
         }
     }
 
-
+    public void leaveRemark(Student student, Rating rating)
+    {
+        student.calculateStars(rating);
+        student.getRatings().add(rating);
+    }
 
 
 
