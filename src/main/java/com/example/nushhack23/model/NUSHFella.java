@@ -1,5 +1,6 @@
 package com.example.nushhack23.model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public abstract class NUSHFella {
@@ -9,9 +10,9 @@ public abstract class NUSHFella {
     private double hours;
     private double stars;
     private String description;
-    private String subject;
+    private ArrayList<String> subjects;
     private ArrayList<Rating> ratings;
-    public NUSHFella(String id, String name, String password, double hours, double stars) {
+    public NUSHFella(String id, String name, String password, double hours, double stars, ArrayList<Rating> ratings, ArrayList<String> subjects) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -40,8 +41,8 @@ public abstract class NUSHFella {
         return description;
     }
 
-    public String getSubject() {
-        return subject;
+    public ArrayList<String> getSubject() {
+        return subjects;
     }
 
     // Mutators
@@ -71,9 +72,9 @@ public abstract class NUSHFella {
         this.description = description;
     }
 
-    public void setSubject(String subject)
+    public void setSubject(ArrayList<String> subject)
     {
-        this.subject = subject;
+        this.subjects = subject;
     }
     // Methods
 
