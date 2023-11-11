@@ -12,9 +12,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
 import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
 
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -23,23 +27,25 @@ import static com.example.nushhack23.MainApplication.startStage;
 public class TeacherController implements Initializable {
 
     private Database db;
+    private Student selectedStudent;
 
+    private ObservableList<Timeslot> availableList = FXCollections.observableArrayList();
     private ObservableList<BookedTimeslot> bookedList = FXCollections.observableArrayList();
 
     @FXML
     private Button addTimeslotBtn;
 
     @FXML
-    private TableColumn<?, ?> availableDurationColumn;
+    private TableColumn<Timeslot, String> availableDurationColumn;
 
     @FXML
-    private TableColumn<?, ?> availableEndColumn;
+    private TableColumn<Timeslot, String> availableEndColumn;
 
     @FXML
-    private TableColumn<?, ?> availableStartColumn;
+    private TableColumn<Timeslot, String> availableStartColumn;
 
     @FXML
-    private TableView<?> availableTimeslotsTV;
+    private TableView<Timeslot> availableTimeslotsTV;
 
     @FXML
     private TableColumn<BookedTimeslot, String> bookedEndColumn;
@@ -127,7 +133,11 @@ public class TeacherController implements Initializable {
 
     @FXML
     void onAddTimeslot(ActionEvent event) {
-
+        Teacher me = db.getTeacher(Statics.studentID);
+        me.getAvailableTimeslots().add(new Timeslot(LocalDateTime.parse(timeslotStartTF.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")), LocalDateTime.parse(timeslotEndTF.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))));
+        timeslotStartTF.clear();
+        timeslotEndTF.clear();
+        updateAvailableTimeslots();
     }
 
     @FXML
@@ -154,7 +164,24 @@ public class TeacherController implements Initializable {
 
     @FXML
     void onComplete(ActionEvent event) {
-
+        Teacher me = db.getTeacher(Statics.studentID);
+        BookedTimeslot selected = bookedTimeSlotsTV.getSelectionModel().getSelectedItem();
+        bookedList.remove(selected);
+        me.getBookedTimeslots().remove(selected);
+        long hours = LocalDateTime.parse(selected.getStart()).until(LocalDateTime.parse(selected.getEnd()), ChronoUnit.HOURS);
+        me.addHours(hours);
+        selectedStudent = db.getStudent(selected.getStudentId());
+        selectedStudent.addHours(hours);
+        myName.setText("Name: " + me.getName());
+        myId.setText("ID: " + me.getId());
+        myHours.setText("Hours: " + String.format("%.2f", me.getHours()));
+        myStars.setText("Stars: " + String.format("%.2f", me.getStars()));
+        mySubjects.setText("Subjects: " + me.getSubjectsString());
+        studentName.setText("Name: " + selectedStudent.getName());
+        studentID.setText("ID: " + selectedStudent.getId());
+        studentHours.setText("Hours: " + String.format("%.2f", selectedStudent.getHours()));
+        studentStars.setText("Stars: " + String.format("%.2f", selectedStudent.getStars()));
+        studentSubjects.setText("Subjects: " + selectedStudent.getSubjectsString());
     }
 
     @FXML
@@ -190,11 +217,22 @@ public class TeacherController implements Initializable {
         alert.showAndWait();
     }
 
+    @FXML
+    void onBookedClicked(MouseEvent event) {
+        selectedStudent = db.getStudent(bookedTimeSlotsTV.getSelectionModel().getSelectedItem().getStudentId());
+        studentName.setText("Name: " + selectedStudent.getName());
+        studentID.setText("ID: " + selectedStudent.getId());
+        studentHours.setText("Hours: " + String.format("%.2f", selectedStudent.getHours()));
+        studentStars.setText("Stars: " + String.format("%.2f", selectedStudent.getStars()));
+        studentSubjects.setText("Subjects: " + selectedStudent.getSubjectsString());
+    }
+
 
     public void start(WindowEvent event) {
         db = new Database();
         db.loadStudentDB("studentsDB.csv");
         db.loadTeacherDB("teachersDB.csv");
+        selectedStudent = null;
 
         saveChangesBtn.setVisible(false);
         editBtn.setVisible(true);
@@ -212,8 +250,13 @@ public class TeacherController implements Initializable {
         bookedEndColumn.setCellValueFactory(new PropertyValueFactory<BookedTimeslot, String>("end"));
         bookedNameColumn.setCellValueFactory(new PropertyValueFactory<BookedTimeslot, String>("studentName"));
         bookedIdColumn.setCellValueFactory(new PropertyValueFactory<BookedTimeslot, String>("studentId"));
+        availableStartColumn.setCellValueFactory(new PropertyValueFactory<Timeslot, String>("startS"));
+        availableEndColumn.setCellValueFactory(new PropertyValueFactory<Timeslot, String>("endS"));
+        availableDurationColumn.setCellValueFactory(new PropertyValueFactory<Timeslot, String>("durationS"));
         updateBookedTimeslots();
+        updateAvailableTimeslots();
         bookedTimeSlotsTV.setItems(bookedList);
+        availableTimeslotsTV.setItems(availableList);
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -223,6 +266,11 @@ public class TeacherController implements Initializable {
     private void updateBookedTimeslots() {
         bookedList.clear();
         bookedList.addAll(db.getTeacher(Statics.studentID).getBookedTimeslots());
+    }
+
+    private void updateAvailableTimeslots() {
+        availableList.clear();
+        availableList.addAll(db.getTeacher(Statics.studentID).getAvailableTimeslots());
     }
 }
 

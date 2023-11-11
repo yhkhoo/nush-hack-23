@@ -57,6 +57,8 @@ public class LoginController {
             }
         }
         Statics.studentID = idTF.getText();
+        idTF.clear();
+        pwdTF.clear();
         if(teacherBox.isSelected()){
             MainApplication.teacherStage.show();
         } else{

@@ -28,7 +28,7 @@
             <Font size="50.0" />
          </font>
       </Button>
-      <Button fx:id="signUpBtn" mnemonicParsing="false" onAction="#onSignUp" prefWidth="250.0" text="Sign Up" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+      <Button fx:id="signUpBtn" mnemonicParsing="false" onAction="#onSignUp" prefWidth="250.0" text="Sign Up" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2">
          <font>
             <Font size="50.0" />
          </font>
