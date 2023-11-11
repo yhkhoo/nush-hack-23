@@ -5,7 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -27,7 +27,7 @@
             <ImageView fx:id="myPfp" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="myName" text="Name:" wrapText="true">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
@@ -35,7 +35,7 @@
             </Label>
             <Label fx:id="myId" text="ID:" wrapText="true">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
@@ -43,7 +43,7 @@
             </Label>
             <Label fx:id="myHours" text="Hours:" wrapText="true">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
@@ -51,7 +51,7 @@
             </Label>
             <Label fx:id="myStars" text="Stars:" wrapText="true">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
@@ -59,32 +59,40 @@
             </Label>
             <Label fx:id="mySubjects" text="Subjects:" wrapText="true">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <TextArea fx:id="subjectTA" prefHeight="19.0" prefWidth="206.0">
+            <TextField fx:id="subjectTF">
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                </VBox.margin>
-            </TextArea>
+            </TextField>
             <Button fx:id="editBtn" mnemonicParsing="false" onAction="#onEdit" stylesheets="@../button.css" text="Edit">
                <font>
-                  <Font size="20.0" />
+                  <Font size="16.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="saveChangesBtn" mnemonicParsing="false" onAction="#onSaveChanges" prefHeight="43.0" prefWidth="212.0" stylesheets="@../button.css" text="Save changes">
+            <Button fx:id="saveChangesBtn" mnemonicParsing="false" onAction="#onSaveChanges" prefHeight="43.0" prefWidth="139.0" stylesheets="@../button.css" text="Save changes">
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                </VBox.margin>
                <font>
-                  <Font size="20.0" />
+                  <Font size="16.0" />
                </font>
+            </Button>
+            <Button fx:id="logOutBtn" mnemonicParsing="false" onAction="#onLogOut" stylesheets="@../logOut.css" text="Log Out">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+               </VBox.margin>
             </Button>
          </children>
       </VBox>
@@ -103,7 +111,7 @@
             <ImageView fx:id="teacherPfp" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="teacherName" text="Name:" wrapText="true">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
@@ -111,7 +119,7 @@
             </Label>
             <Label fx:id="teacherID" text="ID:" wrapText="true">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
@@ -119,7 +127,7 @@
             </Label>
             <Label fx:id="teacherHours" text="Hours:" wrapText="true">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
@@ -127,7 +135,7 @@
             </Label>
             <Label fx:id="teacherStars" text="Stars:" wrapText="true">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
@@ -135,7 +143,7 @@
             </Label>
             <Label fx:id="teacherSubjects" text="Subjects:" wrapText="true">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
@@ -143,19 +151,19 @@
             </Label>
             <Label fx:id="teacherTimeslots" text="Timeslots:">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <FlowPane fx:id="teacherTImeslots" prefWidth="200.0" />
-            <Button mnemonicParsing="false" onAction="#onBook" stylesheets="@../button.css" text="Book">
+            <FlowPane fx:id="teacherTimeslots" prefWidth="200.0" />
+            <Button fx:id="bookBtn" mnemonicParsing="false" onAction="#onBook" prefHeight="16.0" prefWidth="179.0" stylesheets="@../button.css" text="Book">
                <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                </VBox.margin>
                <font>
-                  <Font size="20.0" />
+                  <Font size="16.0" />
                </font>
             </Button>
          </children>
