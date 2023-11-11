@@ -67,7 +67,7 @@ public class NUSHFella {
         StringBuilder sb = new StringBuilder();
         for(String i: subjects){
             sb.append(i);
-            sb.append(", ");
+            sb.append(',');
         }
         sb.delete(sb.length()-2, sb.length());
         return sb.toString();

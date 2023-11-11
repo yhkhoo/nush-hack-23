@@ -152,9 +152,15 @@ public class StudentController implements Initializable {
         db.loadStudentDB("studentsDB.csv");
         db.loadTeacherDB("teachersDB.csv");
 
+        NUSHFella me = db.getStudent(Statics.studentID);
+        myName.setText("Name: " + me.getName());
+        myId.setText("ID: " + me.getId());
+        myHours.setText("Hours: " + String.format("%.2f", me.getHours()));
+        myStars.setText("Stars: " + String.format("%.2f", me.getStars()));
+
         saveChangesBtn.setVisible(false);
         subjectTF.setEditable(false);
-        subjectTF.setText(db.getStudent(Statics.studentID).getSubjects().toString());
+        subjectTF.setText(db.getStudent(Statics.studentID).getSubjectsString());
 
         idColumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("name"));

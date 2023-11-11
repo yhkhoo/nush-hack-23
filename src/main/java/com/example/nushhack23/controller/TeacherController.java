@@ -1,11 +1,9 @@
 package com.example.nushhack23.controller;
 
 import com.example.nushhack23.MainApplication;
-import com.example.nushhack23.model.Database;
-import com.example.nushhack23.model.Rating;
-import com.example.nushhack23.model.Statics;
-import com.example.nushhack23.model.Teacher;
+import com.example.nushhack23.model.*;
 import javafx.beans.Observable;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,18 +18,43 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import static com.example.nushhack23.MainApplication.startStage;
+
 public class TeacherController implements Initializable {
 
     private Database db;
+
+    private ObservableList<BookedTimeslot> bookedList = FXCollections.observableArrayList();
 
     @FXML
     private Button addTimeslotBtn;
 
     @FXML
+    private TableColumn<?, ?> availableDurationColumn;
+
+    @FXML
+    private TableColumn<?, ?> availableEndColumn;
+
+    @FXML
+    private TableColumn<?, ?> availableStartColumn;
+
+    @FXML
     private TableView<?> availableTimeslotsTV;
 
     @FXML
-    private TableView<?> bookedTimeSlotsTV;
+    private TableColumn<BookedTimeslot, String> bookedEndColumn;
+
+    @FXML
+    private TableColumn<BookedTimeslot, String> bookedIdColumn;
+
+    @FXML
+    private TableColumn<BookedTimeslot, String> bookedNameColumn;
+
+    @FXML
+    private TableColumn<BookedTimeslot, String> bookedStartColumn;
+
+    @FXML
+    private TableView<BookedTimeslot> bookedTimeSlotsTV;
 
     @FXML
     private TextField commentTF;
@@ -152,7 +175,11 @@ public class TeacherController implements Initializable {
 
     @FXML
     void onLogOut(ActionEvent event) {
-
+        db.writeStudents("studentsDB.csv");
+        db.writeTeachers("teachersDB.csv");
+        Statics.studentID = "";
+        logOutBtn.getScene().getWindow().hide();
+        startStage.show();
     }
 
     private void showAlert(String title, String header, String content){
@@ -173,10 +200,29 @@ public class TeacherController implements Initializable {
         editBtn.setVisible(true);
         subjectTF.setEditable(false);
         timeslotRemoveBtn.setVisible(false);
+
+        NUSHFella me = db.getTeacher(Statics.studentID);
+        myName.setText("Name: " + me.getName());
+        myId.setText("ID: " + me.getId());
+        myHours.setText("Hours: " + String.format("%.2f", me.getHours()));
+        myStars.setText("Stars: " + String.format("%.2f", me.getStars()));
+        mySubjects.setText("Subjects: " + me.getSubjectsString());
+
+        bookedStartColumn.setCellValueFactory(new PropertyValueFactory<BookedTimeslot, String>("start"));
+        bookedEndColumn.setCellValueFactory(new PropertyValueFactory<BookedTimeslot, String>("end"));
+        bookedNameColumn.setCellValueFactory(new PropertyValueFactory<BookedTimeslot, String>("studentName"));
+        bookedIdColumn.setCellValueFactory(new PropertyValueFactory<BookedTimeslot, String>("studentId"));
+        updateBookedTimeslots();
+        bookedTimeSlotsTV.setItems(bookedList);
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         MainApplication.teacherStage.setOnShown(this::start);
+    }
+
+    private void updateBookedTimeslots() {
+        bookedList.clear();
+        bookedList.addAll(db.getTeacher(Statics.studentID).getBookedTimeslots());
     }
 }
 

@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.nushhack23.controller.TeacherController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.nushhack23.controller.TeacherController">
    <left>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
@@ -196,10 +196,10 @@
             </Label>
             <TableView fx:id="bookedTimeSlotsTV" prefHeight="238.0" prefWidth="500.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Start" />
-                <TableColumn prefWidth="75.0" text="End" />
-                  <TableColumn prefWidth="183.20004272460938" text="Name" />
-                  <TableColumn prefWidth="166.4000244140625" text="Student ID" />
+                <TableColumn fx:id="bookedStartColumn" prefWidth="125.33329772949219" text="Start" />
+                <TableColumn fx:id="bookedEndColumn" prefWidth="128.6666259765625" text="End" />
+                  <TableColumn fx:id="bookedNameColumn" prefWidth="141.99996948242188" text="Name" />
+                  <TableColumn fx:id="bookedIdColumn" prefWidth="105.3333740234375" text="Student ID" />
               </columns>
             </TableView>
             <Label alignment="CENTER" prefHeight="0.0" prefWidth="500.0" text="Available Timeslots">
@@ -212,9 +212,9 @@
             </Label>
             <TableView fx:id="availableTimeslotsTV" prefHeight="202.0" prefWidth="500.0">
               <columns>
-                <TableColumn prefWidth="156.0" text="Start" />
-                <TableColumn prefWidth="170.39999389648438" text="End" />
-                  <TableColumn prefWidth="177.5999755859375" text="Duration" />
+                <TableColumn fx:id="availableStartColumn" prefWidth="156.0" text="Start" />
+                <TableColumn fx:id="availableEndColumn" prefWidth="170.39999389648438" text="End" />
+                  <TableColumn fx:id="availableDurationColumn" prefWidth="177.5999755859375" text="Duration" />
               </columns>
                <VBox.margin>
                   <Insets bottom="5.0" />
