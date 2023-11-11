@@ -1,5 +1,6 @@
 package com.example.nushhack23;
 
+import com.example.nushhack23.controller.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,11 +11,11 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 
 public class MainApplication extends Application {
-    private Stage studentStage;
-    private Stage teacherStage;
-    private Stage loginStage;
-    private Stage signupStage;
-    private Stage startStage;
+    public static Stage studentStage;
+    public static Stage teacherStage;
+    public static Stage loginStage;
+    public static Stage signupStage;
+    public static Stage startStage;
     @Override
     public void init() throws IOException {
     }
@@ -39,7 +40,7 @@ public class MainApplication extends Application {
         startStage.show();
     }
 
-    private Parent load(String fn) throws IOException {
+    public Parent load(String fn) throws IOException {
         return FXMLLoader.load(getClass().getResource("view/"+fn+"-view.fxml"));
     }
 }

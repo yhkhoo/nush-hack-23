@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.nushhack23.controller.StudentController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.nushhack23.controller.StudentController">
    <left>
       <VBox prefHeight="362.0" prefWidth="206.0" BorderPane.alignment="CENTER">
          <children>
@@ -149,7 +149,7 @@
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <Label fx:id="teacherTimeslots" text="Timeslots:">
+            <Label text="Timeslots:">
                <font>
                   <Font size="18.0" />
                </font>
@@ -158,14 +158,6 @@
                </VBox.margin>
             </Label>
             <FlowPane fx:id="teacherTimeslots" prefWidth="200.0" />
-            <Button fx:id="bookBtn" mnemonicParsing="false" onAction="#onBook" prefHeight="16.0" prefWidth="179.0" stylesheets="@../button.css" text="Book">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
          </children>
       </VBox>
    </right>
@@ -180,7 +172,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Label>
-            <TableView fx:id="timeslotTV" prefHeight="509.0" prefWidth="494.0">
+            <TableView fx:id="timeslotTV" onMouseClicked="#onTableClicked" prefHeight="509.0" prefWidth="494.0">
                <columns>
                   <TableColumn fx:id="idColumn" prefWidth="140.00000607967377" text="Student ID" />
                   <TableColumn fx:id="nameColumn" prefWidth="252.80001831054688" text="Name" />

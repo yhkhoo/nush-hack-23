@@ -44,7 +44,7 @@ public class Database {
     }
 
     public NUSHFella readNUSHFella(String line1, String line2, String line3) {
-        String[] tokens = line1.split("|");
+        String[] tokens = line1.split("\\|");
         String studentID = tokens[0];
         String name = tokens[1];
         String password = tokens[2];
@@ -54,12 +54,12 @@ public class Database {
         ArrayList<Rating> ratings = new ArrayList<Rating>();
         ArrayList<String> subjects = new ArrayList<String>();
 
-        tokens = line2.split("|");
+        tokens = line2.split("\\|");
         for (int i = 0; i < tokens.length; i += 2) {
             ratings.add(new Rating(Double.parseDouble(tokens[i]), tokens[i + 1]));
         }
 
-        tokens = line3.split("|");
+        tokens = line3.split("\\|");
         for (int i = 0; i < tokens.length; i++) {
             subjects.add(tokens[i]);
         }
@@ -73,6 +73,7 @@ public class Database {
         sb.append(fella.getName());
         sb.append('|');
         sb.append(fella.getPassword());
+        sb.append('|');
         sb.append(fella.getHours());
         sb.append('|');
         sb.append(fella.getStars());
@@ -84,14 +85,16 @@ public class Database {
             sb.append(rating.getComment());
             sb.append('|');
         }
-        sb.deleteCharAt(sb.length()-1);
+        if(sb.charAt(sb.length()-1) == '|')
+                    sb.deleteCharAt(sb.length()-1);
         sb.append('\n');
 
         for(String subject: fella.getSubjects()) {
             sb.append(subject);
             sb.append('|');
         }
-        sb.deleteCharAt(sb.length()-1);
+        if(sb.charAt(sb.length()-1) == '|')
+                    sb.deleteCharAt(sb.length()-1);
         sb.append('\n');
         return sb.toString();
     }
@@ -108,13 +111,13 @@ public class Database {
                 ArrayList<String> bookedTeachers = new ArrayList<String>();
 
                 line = reader.readLine();
-                tokens = line.split("|");
+                tokens = line.split("\\|");
                 for (int i = 0; i < tokens.length; i += 2) {
                     timeslotsBooked.add(new Timeslot(LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i]), 0, ZoneOffset.ofHours(8)), LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i + 1]), 0, ZoneOffset.ofHours(8))));
                 }
 
                 line = reader.readLine();
-                tokens = line.split("|");
+                tokens = line.split("\\|");
                 for (int i = 0; i < tokens.length; i += 1) {
                     bookedTeachers.add(tokens[i]);
                 }
@@ -122,7 +125,7 @@ public class Database {
                 studentDB.add(new Student(fella, timeslotsBooked, bookedTeachers));
             }
         } catch (Exception e) {
-            System.out.println("error");
+            e.printStackTrace();
         }
     }
 
@@ -139,27 +142,41 @@ public class Database {
                 ArrayList<String> bookers = new ArrayList<>();
 
                 line = reader.readLine();
-                tokens = line.split("|");
-                for (int i = 0; i < tokens.length; i += 2) {
-                    availableTimeslots.add(new Timeslot(LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i]), 0, ZoneOffset.ofHours(8)), LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i + 1]), 0, ZoneOffset.ofHours(8))));
+                if(!line.isEmpty()) {
+                    tokens = line.split("\\|");
+                    for (int i = 0; i < tokens.length; i += 2) {
+                        availableTimeslots.add(new Timeslot(LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i]), 0, ZoneOffset.ofHours(8)), LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i + 1]), 0, ZoneOffset.ofHours(8))));
+                    }
                 }
 
                 line = reader.readLine();
-                tokens = line.split("|");
-                for (int i = 0; i < tokens.length; i += 2) {
-                    bookedTimeslots.add(new Timeslot(LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i]), 0, ZoneOffset.ofHours(8)), LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i + 1]), 0, ZoneOffset.ofHours(8))));
+                if(!line.isEmpty()) {
+                    tokens = line.split("\\|");
+                    for (int i = 0; i < tokens.length; i += 2) {
+                        bookedTimeslots.add(new Timeslot(LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i]), 0, ZoneOffset.ofHours(8)), LocalDateTime.ofEpochSecond(Long.parseLong(tokens[i + 1]), 0, ZoneOffset.ofHours(8))));
+                    }
                 }
 
                 line = reader.readLine();
-                tokens = line.split("|");
-                for (int i = 0; i < tokens.length; i += 1) {
-                    bookers.add(tokens[i]);
+                if(!line.isEmpty()) {
+                    tokens = line.split("\\|");
+                    for (int i = 0; i < tokens.length; i += 1) {
+                        bookers.add(tokens[i]);
+                    }
                 }
 
-                teacherDB.add(new Teacher(fella, availableTimeslots, bookedTimeslots, bookers));
+                ArrayList<BookedTimeslot> bookedTimeslots1 = new ArrayList<BookedTimeslot>();
+
+                for(int i=0; i<bookedTimeslots.size(); i += 1) {
+                    Timeslot t = bookedTimeslots.get(i);
+                    String id = bookers.get(i);
+                    bookedTimeslots1.add(new BookedTimeslot(t.getStart().toString(), t.getEnd().toString(), id, getStudent(id).getName()));
+                }
+
+                teacherDB.add(new Teacher(fella, availableTimeslots, bookedTimeslots1));
             }
         } catch (Exception e) {
-            System.out.println("error");
+            e.printStackTrace();
         }
     }
 
@@ -175,16 +192,20 @@ public class Database {
                     sb.append(timeslot.getEnd().atZone(ZoneId.of("Asia/Singapore")).toEpochSecond());
                     sb.append('|');
                 }
-                sb.deleteCharAt(sb.length()-1);
+                if(sb.charAt(sb.length()-1) == '|')
+                    sb.deleteCharAt(sb.length()-1);
                 sb.append('\n');
                 for(String teacher: student.getBookedTeachers()) {
                     sb.append(teacher);
                     sb.append('|');
                 }
-                sb.deleteCharAt(sb.length()-1);
+                if(sb.charAt(sb.length()-1) == '|')
+                    sb.deleteCharAt(sb.length()-1);
                 sb.append('\n');
             }
-            writer.write(sb.toString());
+            System.out.println(sb);
+            writer.print(sb.toString());
+            writer.close();
         } catch(Exception e) {
             e.printStackTrace(); // cry about it
         }
@@ -202,24 +223,29 @@ public class Database {
                     sb.append(timeslot.getEnd().atZone(ZoneId.of("Asia/Singapore")).toEpochSecond());
                     sb.append('|');
                 }
-                sb.deleteCharAt(sb.length()-1);
+                if(sb.charAt(sb.length()-1) == '|')
+                    sb.deleteCharAt(sb.length()-1);
                 sb.append('\n');
-                for(Timeslot timeslot: teacher.getBookedTimeslots()) {
-                    sb.append(timeslot.getStart().atZone(ZoneId.of("Asia/Singapore")).toEpochSecond());
+                for(BookedTimeslot timeslot: teacher.getBookedTimeslots()) {
+                    sb.append(LocalDateTime.parse(timeslot.getStart()).atZone(ZoneId.of("Asia/Singapore")).toEpochSecond());
                     sb.append('|');
-                    sb.append(timeslot.getEnd().atZone(ZoneId.of("Asia/Singapore")).toEpochSecond());
+                    sb.append(LocalDateTime.parse(timeslot.getEnd()).atZone(ZoneId.of("Asia/Singapore")).toEpochSecond());
                     sb.append('|');
                 }
-                sb.deleteCharAt(sb.length()-1);
+                if(sb.charAt(sb.length()-1) == '|')
+                    sb.deleteCharAt(sb.length()-1);
                 sb.append('\n');
-                for(String student: teacher.getBookers()) {
+                for(BookedTimeslot timeslot: teacher.getBookedTimeslots()) {
+                    String student = timeslot.getStudentId();
                     sb.append(student);
                     sb.append('|');
                 }
-                sb.deleteCharAt(sb.length()-1);
+                if(sb.charAt(sb.length()-1) == '|')
+                    sb.deleteCharAt(sb.length()-1);
                 sb.append('\n');
             }
-            writer.write(sb.toString());
+            writer.print(sb.toString());
+            writer.close();
         } catch(Exception e) {
             e.printStackTrace(); // cry about it
         }

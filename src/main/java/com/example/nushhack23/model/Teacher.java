@@ -5,25 +5,22 @@ import java.util.ArrayList;
 public class Teacher extends NUSHFella {
 
     private ArrayList<Timeslot> availableTimeslots;
-    private ArrayList<Timeslot> bookedTimeslots;
-    private ArrayList<String> bookers;
+    private ArrayList<BookedTimeslot> bookedTimeslots;
 
-    public Teacher(String student_ID, String name, String password, double hours, double stars, ArrayList<Rating> ratings, ArrayList<String> subjects, ArrayList<Timeslot> availableTimeslots, ArrayList<Timeslot> bookedTimeslots, ArrayList<String> bookers){
+    public Teacher(String student_ID, String name, String password, double hours, double stars, ArrayList<Rating> ratings, ArrayList<String> subjects, ArrayList<Timeslot> availableTimeslots, ArrayList<BookedTimeslot> bookedTimeslots){
         super(student_ID, name, password, hours, stars, ratings, subjects);
         this.availableTimeslots = availableTimeslots;
         this.bookedTimeslots = bookedTimeslots;
-        this.bookers = bookers;
     }
 
-    public Teacher(NUSHFella nushFella, ArrayList<Timeslot> availableTimeslots, ArrayList<Timeslot> bookedTimeslots, ArrayList<String> bookers) {
+    public Teacher(NUSHFella nushFella, ArrayList<Timeslot> availableTimeslots, ArrayList<BookedTimeslot> bookedTimeslots) {
         super(nushFella);
         this.availableTimeslots = availableTimeslots;
         this.bookedTimeslots = bookedTimeslots;
-        this.bookers = bookers;
     }
 
     public Teacher(String student_ID, String name, String password, double hours, double stars){
-        this(student_ID, name, password, hours, stars, new ArrayList<Rating>(), new ArrayList<String>(), new ArrayList<Timeslot>(), new ArrayList<Timeslot>(), new ArrayList<String>());
+        this(student_ID, name, password, hours, stars, new ArrayList<Rating>(), new ArrayList<String>(), new ArrayList<Timeslot>(), new ArrayList<BookedTimeslot>());
     }
 
     public Teacher(String student_ID, String name, String password)
@@ -35,7 +32,7 @@ public class Teacher extends NUSHFella {
         this.availableTimeslots = availableTimeslots;
     }
 
-    public void setBookedTimeslots(ArrayList<Timeslot> bookedTimeslots) {
+    public void setBookedTimeslots(ArrayList<BookedTimeslot> bookedTimeslots) {
         this.bookedTimeslots = bookedTimeslots;
     }
 
@@ -43,19 +40,17 @@ public class Teacher extends NUSHFella {
         return this.availableTimeslots;
     }
 
-    public ArrayList<Timeslot> getBookedTimeslots(){
+    public ArrayList<BookedTimeslot> getBookedTimeslots(){
         return this.bookedTimeslots;
     }
 
-    public ArrayList<String> getBookers() {
-        return bookers;
-    }
-
-    public void bookTimeslot(Timeslot t1){
+    public void bookTimeslot(Timeslot t1, Student booker){
         if(availableTimeslots.contains(t1))
         {
-            bookedTimeslots.add(t1);
             availableTimeslots.remove(t1);
+            bookedTimeslots.add(new BookedTimeslot(t1.getStart().toString(), t1.getEnd().toString(), booker.getId(), booker.getName()));
+        } else {
+            System.out.println("timeslot not in available list!");
         }
     }
 

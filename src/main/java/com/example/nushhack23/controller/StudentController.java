@@ -1,29 +1,34 @@
 package com.example.nushhack23.controller;
 
-import com.example.nushhack23.model.Database;
-import com.example.nushhack23.model.Statics;
-import com.example.nushhack23.model.Student;
-import com.example.nushhack23.model.Teacher;
+import com.example.nushhack23.MainApplication;
+import com.example.nushhack23.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
+
+import static com.example.nushhack23.MainApplication.*;
 
 public class StudentController implements Initializable {
 
     private Database db;
     private ObservableList<Teacher> tableList = FXCollections.observableArrayList();
-    @FXML
-    private Button bookBtn;
+    private Teacher selectedTeacher;
 
     @FXML
     private Button editBtn;
@@ -89,10 +94,6 @@ public class StudentController implements Initializable {
     @FXML
     private TableColumn<Teacher, String> starsColumn;
 
-    @FXML
-    void onBook(ActionEvent event) {
-
-    }
 
     @FXML
     void onEdit(ActionEvent event) {
@@ -105,10 +106,7 @@ public class StudentController implements Initializable {
     void onSaveChanges(ActionEvent event) {
         String newSubjects = subjectTF.getText();
         String tokens[] = newSubjects.split(",");
-        ArrayList<String> subjects = new ArrayList<>();
-        for(String i : tokens){
-            subjects.add(i);
-        }
+        ArrayList<String> subjects = new ArrayList<>(Arrays.asList(tokens));
         db.getStudent(Statics.studentID).setSubject(subjects);
         subjectTF.setEditable(false);
         subjectTF.setPromptText(db.getStudent(Statics.studentID).toString());
@@ -116,15 +114,47 @@ public class StudentController implements Initializable {
         saveChangesBtn.setVisible(false);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    void onTableClicked(MouseEvent event) {
+        selectedTeacher = timeslotTV.getSelectionModel().getSelectedItem();
+        teacherName.setText("Name: " + selectedTeacher.getName());
+        teacherID.setText("ID: " + selectedTeacher.getId());
+        teacherHours.setText("Hours: " + String.format("%.2f", selectedTeacher.getHours()));
+        teacherStars.setText("Stars: " + String.format("%.2f", selectedTeacher.getStars()));
+        teacherSubjects.setText("Subjects: " + selectedTeacher.getSubjectsString());
+        updateTimeslots();
+    }
+
+    @FXML
+    void onLogOut(ActionEvent event) {
+        db.writeStudents("studentsDB.csv");
+        db.writeTeachers("teachersDB.csv");
+        Statics.studentID = "";
+        logOutBtn.getScene().getWindow().hide();
+        startStage.show();
+    }
+
+    void onTimeslot(ActionEvent event) {
+        Timeslot timeslot = null;
+        for(Timeslot i: selectedTeacher.getAvailableTimeslots()){
+            if(i.toString().equals(((Button)event.getSource()).getText())){
+                timeslot = i;
+                break;
+            }
+        }
+        selectedTeacher.bookTimeslot(timeslot, db.getStudent(Statics.studentID));
+        updateTimeslots();
+    }
+
+    public void start(WindowEvent event) {
+        selectedTeacher = null;
         db = new Database();
         db.loadStudentDB("studentsDB.csv");
-        db.loadTeacherDB("teacherDB.csv");
+        db.loadTeacherDB("teachersDB.csv");
 
         saveChangesBtn.setVisible(false);
         subjectTF.setEditable(false);
-        subjectTF.setPromptText(db.getStudent(Statics.studentID).getSubjects().toString());
+        subjectTF.setText(db.getStudent(Statics.studentID).getSubjects().toString());
 
         idColumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("name"));
@@ -142,6 +172,22 @@ public class StudentController implements Initializable {
                 if(tableList.get(tableList.size()-1) == t1)
                     break;
             }
+        }
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        studentStage.setOnShown(this::start);
+    }
+
+    private void updateTimeslots() {
+        teacherTimeslots.getChildren().clear();
+        for(Timeslot i: selectedTeacher.getAvailableTimeslots()) {
+            Button btn = new Button();
+            btn.setText(i.toString());
+            btn.setOnAction(this::onTimeslot);
+            teacherTimeslots.getChildren().add(btn);
         }
     }
 }

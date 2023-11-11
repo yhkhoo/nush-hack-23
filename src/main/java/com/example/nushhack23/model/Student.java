@@ -41,8 +41,8 @@ public class Student extends NUSHFella {
 
     public void bookTimeslot(Teacher tutor, Timeslot t1)
     {
-        tutor.getAvailableTimeslots().remove(t1);
-        tutor.getBookedTimeslots().add(t1);
+        timeslotsBooked.add(t1);
+        bookedTeachers.add(tutor.getId());
     }
 
     public void leaveRating(Teacher tutor, Rating rating)

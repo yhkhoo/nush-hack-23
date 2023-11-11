@@ -63,6 +63,16 @@ public class NUSHFella {
         return ratings;
     }
 
+    public String getSubjectsString() {
+        StringBuilder sb = new StringBuilder();
+        for(String i: subjects){
+            sb.append(i);
+            sb.append(", ");
+        }
+        sb.delete(sb.length()-2, sb.length());
+        return sb.toString();
+    }
+
     // Mutators
     public void setId(String id) {
         this.id = id;

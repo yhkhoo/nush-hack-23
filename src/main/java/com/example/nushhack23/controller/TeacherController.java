@@ -1,5 +1,6 @@
 package com.example.nushhack23.controller;
 
+import com.example.nushhack23.MainApplication;
 import com.example.nushhack23.model.Database;
 import com.example.nushhack23.model.Rating;
 import com.example.nushhack23.model.Statics;
@@ -13,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
 import javafx.event.ActionEvent;
+import javafx.stage.WindowEvent;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -162,18 +164,19 @@ public class TeacherController implements Initializable {
     }
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void start(WindowEvent event) {
         db = new Database();
         db.loadStudentDB("studentsDB.csv");
-        db.loadTeacherDB("teacherDB.csv");
+        db.loadTeacherDB("teachersDB.csv");
 
         saveChangesBtn.setVisible(false);
         editBtn.setVisible(true);
         subjectTF.setEditable(false);
         timeslotRemoveBtn.setVisible(false);
-
-
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        MainApplication.teacherStage.setOnShown(this::start);
     }
 }
 
