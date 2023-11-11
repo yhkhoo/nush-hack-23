@@ -2,9 +2,13 @@ package com.example.nushhack23.controller;
 
 import com.example.nushhack23.model.Database;
 import com.example.nushhack23.model.Statics;
+import com.example.nushhack23.model.Teacher;
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
 import javafx.event.ActionEvent;
@@ -16,6 +20,7 @@ import java.util.ResourceBundle;
 public class TeacherController implements Initializable {
 
     private Database db;
+
     @FXML
     private Button addTimeslotBtn;
 
@@ -26,7 +31,16 @@ public class TeacherController implements Initializable {
     private TableView<?> bookedTimeSlotsTV;
 
     @FXML
+    private TextField commentTF;
+
+    @FXML
+    private Button completeBtn;
+
+    @FXML
     private Button editBtn;
+
+    @FXML
+    private Button leaveCommentBtn;
 
     @FXML
     private Button logOutBtn;
@@ -48,6 +62,9 @@ public class TeacherController implements Initializable {
 
     @FXML
     private Label mySubjects;
+
+    @FXML
+    private Slider ratingSL;
 
     @FXML
     private Button saveChangesBtn;
@@ -110,13 +127,36 @@ public class TeacherController implements Initializable {
     }
 
     @FXML
-    void onRemove(ActionEvent event) {
+    void onComplete(ActionEvent event) {
 
+    }
+
+    @FXML
+    void onRemove(ActionEvent event) {
+        availableTimeslotsTV.getSelectionModel().getSelectedItem();
+    }
+
+    @FXML
+    void onLeaveComment(ActionEvent event) {
+        if(commentTF.getText().isEmpty()){
+            showAlert("Invalid input", "Please leave a comment", "");
+        }else {
+            String comment = commentTF.getText();
+
+        }
     }
 
     @FXML
     void onLogOut(ActionEvent event) {
 
+    }
+
+    private void showAlert(String title, String header, String content){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
 
@@ -130,6 +170,8 @@ public class TeacherController implements Initializable {
         editBtn.setVisible(true);
         subjectTF.setEditable(false);
         timeslotRemoveBtn.setVisible(false);
+
+
     }
 }
 
