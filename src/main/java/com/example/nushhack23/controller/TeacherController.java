@@ -20,10 +20,16 @@ public class TeacherController implements Initializable {
     private Button addTimeslotBtn;
 
     @FXML
+    private TableView<?> availableTimeslotsTV;
+
+    @FXML
+    private TableView<?> bookedTimeSlotsTV;
+
+    @FXML
     private Button editBtn;
 
     @FXML
-    private ListView<?> listView;
+    private Button logOutBtn;
 
     @FXML
     private Label myHours;
@@ -65,7 +71,7 @@ public class TeacherController implements Initializable {
     private Label studentSubjects;
 
     @FXML
-    private TextArea subjectTA;
+    private TextField subjectTF;
 
     @FXML
     private TextField timeslotEndTF;
@@ -78,33 +84,38 @@ public class TeacherController implements Initializable {
 
     @FXML
     void onAddTimeslot(ActionEvent event) {
-        
+
     }
 
     @FXML
     void onEdit(ActionEvent event) {
-        subjectTA.setEditable(true);
+        subjectTF.setEditable(true);
         saveChangesBtn.setVisible(true);
         editBtn.setVisible(false);
     }
 
     @FXML
     void onSaveChanges(ActionEvent event) {
-        String newSubjects = subjectTA.getText();
+        String newSubjects = subjectTF.getText();
         String tokens[] = newSubjects.split(",");
         ArrayList<String> subjects = new ArrayList<String>();
         for(String i : tokens){
             subjects.add(i);
         }
         db.getStudent(Statics.studentID).setSubject(subjects);
-        subjectTA.setEditable(false);
-        subjectTA.setPromptText(db.getStudent(Statics.studentID).toString());
+        subjectTF.setEditable(false);
+        subjectTF.setPromptText(db.getStudent(Statics.studentID).toString());
         editBtn.setVisible(true);
         saveChangesBtn.setVisible(false);
     }
 
     @FXML
     void onRemove(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onLogOut(ActionEvent event) {
 
     }
 
@@ -117,7 +128,7 @@ public class TeacherController implements Initializable {
 
         saveChangesBtn.setVisible(false);
         editBtn.setVisible(true);
-        subjectTA.setEditable(false);
+        subjectTF.setEditable(false);
         timeslotRemoveBtn.setVisible(false);
     }
 }

@@ -29,6 +29,9 @@ public class StudentController implements Initializable {
     private Button editBtn;
 
     @FXML
+    private Button logOutBtn;
+
+    @FXML
     private Label myHours;
 
     @FXML
@@ -49,8 +52,9 @@ public class StudentController implements Initializable {
     @FXML
     private Button saveChangesBtn;
 
+
     @FXML
-    private TextArea subjectTA;
+    private TextField subjectTF;
 
     @FXML
     private Label teacherHours;
@@ -71,7 +75,7 @@ public class StudentController implements Initializable {
     private Label teacherSubjects;
 
     @FXML
-    private Label teacherTimeslots;
+    private FlowPane teacherTimeslots;
 
     @FXML
     private TableView<Teacher> timeslotTV;
@@ -92,22 +96,22 @@ public class StudentController implements Initializable {
 
     @FXML
     void onEdit(ActionEvent event) {
-        subjectTA.setEditable(true);
+        subjectTF.setEditable(true);
         saveChangesBtn.setVisible(true);
         editBtn.setVisible(false);
     }
 
     @FXML
     void onSaveChanges(ActionEvent event) {
-        String newSubjects = subjectTA.getText();
+        String newSubjects = subjectTF.getText();
         String tokens[] = newSubjects.split(",");
         ArrayList<String> subjects = new ArrayList<>();
         for(String i : tokens){
             subjects.add(i);
         }
         db.getStudent(Statics.studentID).setSubject(subjects);
-        subjectTA.setEditable(false);
-        subjectTA.setPromptText(db.getStudent(Statics.studentID).toString());
+        subjectTF.setEditable(false);
+        subjectTF.setPromptText(db.getStudent(Statics.studentID).toString());
         editBtn.setVisible(true);
         saveChangesBtn.setVisible(false);
     }
@@ -119,8 +123,8 @@ public class StudentController implements Initializable {
         db.loadTeacherDB("teacherDB.csv");
 
         saveChangesBtn.setVisible(false);
-        subjectTA.setEditable(false);
-        subjectTA.setPromptText(db.getStudent(Statics.studentID).getSubjects().toString());
+        subjectTF.setEditable(false);
+        subjectTF.setPromptText(db.getStudent(Statics.studentID).getSubjects().toString());
 
         idColumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("name"));
