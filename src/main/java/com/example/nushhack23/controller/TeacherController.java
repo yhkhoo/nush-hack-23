@@ -1,6 +1,7 @@
 package com.example.nushhack23.controller;
 
 import com.example.nushhack23.model.Database;
+import com.example.nushhack23.model.Rating;
 import com.example.nushhack23.model.Statics;
 import com.example.nushhack23.model.Teacher;
 import javafx.beans.Observable;
@@ -142,7 +143,8 @@ public class TeacherController implements Initializable {
             showAlert("Invalid input", "Please leave a comment", "");
         }else {
             String comment = commentTF.getText();
-
+            double rating = ratingSL.getValue();
+            db.getTeacher(Statics.studentID).leaveRemark(db.getStudent(studentID.getText()), new Rating(rating, comment));
         }
     }
 
